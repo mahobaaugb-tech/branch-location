@@ -1,62 +1,18 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Branch Location</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body style="font-family:Arial; text-align:center; padding:20px;">
-
-<h2>📍 Branch Location Submission</h2>
-<p>Click the button and allow location access</p>
-
-<button onclick="getLocation()" style="padding:15px 25px;font-size:16px;">
-Send My Location
-</button>
-
-<p id="result"></p>
-
+<body>
 <script>
-function getLocation() {
-
-  const branch = prompt("Enter Branch Code:");
-  if (!branch) {
-    document.getElementById("result").innerHTML = "❌ Branch code required";
-    return;
-  }
-
-  if (!navigator.geolocation) {
-    document.getElementById("result").innerHTML =
-      "Geolocation not supported";
-    return;
-  }
-
-  navigator.geolocation.getCurrentPosition(
-    function(position) {
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
-
-fetch("https://script.google.com/macros/s/https://script.google.com/macros/s/AKfycbw2KWbb9OhcWNxYXe7tMFA6Xg2r6azsVFtcCMZqv7si8_WNaay1tTxx6dLWnAo8LgOawQ/exec", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    branch: branch,
-    lat: lat,
-    lon: lon
+navigator.geolocation.getCurrentPosition(function(position) {
+  const lat = position.coords.latitude;
+  const lon = position.coords.longitude;
+  fetch("https://your-server.com/collect", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ lat, lon })
   })
-}));
-
-      document.getElementById("result").innerHTML =
-        "✅ Location sent successfully";
-    },
-    function() {
-      document.getElementById("result").innerHTML =
-        "❌ Location permission denied";
-    }
-  );
-}
+  .then(()=>alert("Location sent!"))
+  .catch(()=>alert("Error sending"));
+});
 </script>
-
 </body>
 </html>
