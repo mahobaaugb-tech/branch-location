@@ -17,9 +17,16 @@ Send My Location
 
 <script>
 function getLocation() {
+
+  const branch = prompt("Enter Branch Code:");
+  if (!branch) {
+    document.getElementById("result").innerHTML = "❌ Branch code required";
+    return;
+  }
+
   if (!navigator.geolocation) {
     document.getElementById("result").innerHTML =
-      "Geolocation not supported.";
+      "Geolocation not supported";
     return;
   }
 
@@ -28,14 +35,22 @@ function getLocation() {
       const lat = position.coords.latitude;
       const lon = position.coords.longitude;
 
+      fetch("https://script.google.com/macros/s/AKfycbx_7BswWgiInQkeicW_UXm-598qqWR4NMNFIH7OZlC0YtP9cpslIvoRbCRNusn5eq-pNw/exec", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          branch: branch,
+          lat: lat,
+          lon: lon
+        })
+      });
+
       document.getElementById("result").innerHTML =
-        "✅ Location captured<br><br>" +
-        "Latitude: " + lat + "<br>" +
-        "Longitude: " + lon;
+        "✅ Location sent successfully";
     },
     function() {
       document.getElementById("result").innerHTML =
-        "❌ Location permission denied.";
+        "❌ Location permission denied";
     }
   );
 }
