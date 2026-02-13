@@ -35,15 +35,17 @@ function getLocation() {
       const lat = position.coords.latitude;
       const lon = position.coords.longitude;
 
-      fetch("https://script.google.com/macros/s/AKfycbx_7BswWgiInQkeicW_UXm-598qqWR4NMNFIH7OZlC0YtP9cpslIvoRbCRNusn5eq-pNw/exec", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          branch: branch,
-          lat: lat,
-          lon: lon
-        })
-      });
+fetch("https://script.google.com/macros/s/https://script.google.com/macros/s/AKfycbw2KWbb9OhcWNxYXe7tMFA6Xg2r6azsVFtcCMZqv7si8_WNaay1tTxx6dLWnAo8LgOawQ/exec", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    branch: branch,
+    lat: lat,
+    lon: lon
+  })
+}));
 
       document.getElementById("result").innerHTML =
         "✅ Location sent successfully";
