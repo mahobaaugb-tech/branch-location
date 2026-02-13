@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Branch Location</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body style="font-family:Arial; text-align:center; padding:20px;">
+
+<h2>📍 Branch Location Submission</h2>
+<p>Click the button and allow location access</p>
+
+<button onclick="getLocation()" style="padding:15px 25px;font-size:16px;">
+Send My Location
+</button>
+
+<p id="result"></p>
+
+<script>
+function getLocation() {
+  if (!navigator.geolocation) {
+    document.getElementById("result").innerHTML =
+      "Geolocation not supported.";
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    function(position) {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+
+      document.getElementById("result").innerHTML =
+        "✅ Location captured<br><br>" +
+        "Latitude: " + lat + "<br>" +
+        "Longitude: " + lon;
+    },
+    function() {
+      document.getElementById("result").innerHTML =
+        "❌ Location permission denied.";
+    }
+  );
+}
+</script>
+
+</body>
+</html>
